@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
@@ -31,7 +32,7 @@ public class Dao {
             ResourceBundle bundle = ResourceBundle.getBundle("sys");
             dbUri = bundle.getString("uri");
             dbProps = new Properties();
-            dbProps.put("user", bundle.getString("user"));
+            dbProps.put("user"    , bundle.getString("user"));
             dbProps.put("password", bundle.getString("password"));
             dbProps.put("characterEncoding", "UTF8"); // 日本語等ではこれが必要
         } catch (MissingResourceException e) {
@@ -50,7 +51,7 @@ public class Dao {
         try (Connection conn = DriverManager.getConnection(dbUri, dbProps)) {
             conn.setAutoCommit(true);
             try (Statement state = conn.createStatement()) {
-                final String SQL = "select * from comment order by last desc";
+                final String SQL = "SELECT * FROM product ORDER BY id DESC;";
                 try (ResultSet rs = state.executeQuery(SQL)) {
                     List<String> key = new ArrayList<>();
                     // カラム名の取得
@@ -63,7 +64,7 @@ public class Dao {
                         LinkedHashMap<String,Object> line = new LinkedHashMap<>();
                         for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
                             // javax.jsonがjava.sql.Timestampをサポートしていないため以下で変換している
-                            if(rs.getObject(i).getClass().equals(java.sql.Timestamp.class)) {
+                            if(rs.getObject(i).getClass().equals(Timestamp.class)) {
                                 line.put(key.get(i-1), rs.getObject(i).toString());
                             } else {
                                 line.put(key.get(i-1), rs.getObject(i));
@@ -81,7 +82,7 @@ public class Dao {
     }
     
     /**
-     * <h5> "comment"テーブルに1行データを追加</h5>
+     * <h5> "product"テーブルに1行データを追加</h5>
      * @param line
      * @return ret 追加行数
      */
@@ -89,12 +90,12 @@ public class Dao {
         int ret = -1;
         try (Connection conn = DriverManager.getConnection(dbUri, dbProps)) {
             conn.setAutoCommit(true);
-            final String SQL = "insert into comment (name, text, ip, last) values (?, ?, ?, ?)";
+            final String SQL = "INSERT INTO product (company, name, price, last) VALUES (?, ?, ?, ?);";
             try (PreparedStatement pStr = conn.prepareStatement(SQL)) {
-                pStr.setString(1, line.get("name").toString());
-                pStr.setString(2, line.get("text").toString());
-                pStr.setString(3, line.get("ip").toString());
-                pStr.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
+                pStr.setString(1, line.get("company").toString());
+                pStr.setString(2, line.get("name").toString());
+                pStr.setInt(3, Integer.valueOf((String) line.get("price")));
+                pStr.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
                 pStr.execute();
                 ret = pStr.getUpdateCount();
             }
@@ -112,10 +113,10 @@ public class Dao {
     public static void main(String[] args) {
         Dao dao = new Dao();
         LinkedHashMap<String,Object> line = new LinkedHashMap<>();
-        line.put("name", "なまえ");
-        line.put("text", "テキスト");
-        line.put("ip", "133.95.1.1");
-        line.put("last", String.format("%1$tF %1$tT", Calendar.getInstance()));
+        line.put("company", "calbee");
+        line.put("name"   , "potato chips");
+        line.put("price"     , "123");
+        line.put("last"   , String.format("%1$tF %1$tT", Calendar.getInstance()));
         System.out.println("add = " + dao.addLine(line));
         ArrayList<LinkedHashMap<String,Object>>  all = dao.getAll();
         for(LinkedHashMap<String,Object> l : all) {

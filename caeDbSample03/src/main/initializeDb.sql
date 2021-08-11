@@ -2,34 +2,36 @@
 -- Initialize Table / テーブルの初期化 --
 -------------------------------------------
 
-show databases;
-use cae;
-show tables;
-select database();
+SHOW databases;
+USE cae;
+SHOW tables;
+SELECT database();
 -- drop table comment;
-CREATE TABLE comment
+CREATE TABLE product
 (
-  id int unsigned not null auto_increment primary key,
-  name varchar(100),
-  text varchar(150),
-  ip varchar(50),
-  last timestamp
+  id      INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  company VARCHAR(100) NOT NULL,
+  name    VARCHAR(100) NOT NULL,
+  price   INT UNSIGNED NOT NULL,
+  last    TIMESTAMP
 );
-describe comment;
+DESC product;
 
-select * from comment;
-delete from comment;
+SELECT * FROM product;
+DELETE FROM product;
 -- show variables like 'char%';
 
 /*
 
-Field Type             Null Key Default           Extra
- ----- ---------------- ---- --- ----------------- --------------
- id    int(10) unsigned NO   PRI NULL              auto_increment
- name  varchar(100)     YES      NULL              
- text  varchar(150)     YES      NULL              
- ip    varchar(50)      YES      NULL              
- last  timestamp        NO       CURRENT_TIMESTAMP 
++---------+------------------+------+-----+---------------------+-------------------------------+
+| Field   | Type             | Null | Key | Default             | Extra                         |
++---------+------------------+------+-----+---------------------+-------------------------------+
+| id      | int(10) unsigned | NO   | PRI | NULL                | auto_increment                |
+| company | varchar(100)     | NO   |     | NULL                |                               |
+| name    | varchar(100)     | NO   |     | NULL                |                               |
+| price   | int(10) unsigned | NO   |     | NULL                |                               |
+| last    | timestamp        | NO   |     | current_timestamp() | on update current_timestamp() |
++---------+------------------+------+-----+---------------------+-------------------------------+
  
 timestamp
 http://en.wikibooks.org/wiki/Structured_Query_Language/Data_Types#Temporal
