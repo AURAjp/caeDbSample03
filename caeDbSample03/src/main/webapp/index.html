@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WebAPI sample program using database / データベースを用いたWebAPIサンプルプログラム</title>
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="./js/webApi.js"></script>
+</head>
+<body>
+	<div data-role="page">
+		<div data-role="header" id="HEADER">FOOTPRINT(足跡)</div>
+		<div role="main" class="ui-content">
+			<div data-role="collapsible" data-collapsed="false" data-theme="b">
+				<h4>Footprint entry (足跡入力)</h4>
+				<div class="ui-corner-all custom-corners">
+					<div class="ui-bar ui-bar-a">
+						<h3>Please type footprint.(足跡を入力してください.)</h3>
+					</div>
+					<div class="ui-body ui-body-a">
+						<form id="myForm">
+							<label for="text-basic">Your name(お名前):</label> <input
+								name="name" id="text-basic" value="" type="text"> <label
+								for="textarea">Comment(コメント):</label>
+							<textarea name="text" id="textarea" cols="40" rows="3"></textarea>
+							<input value="Submit" data-theme="a" type="submit">
+						</form>
+					</div>
+				</div>
+			</div>
+			<div data-role="collapsible" data-collapsed="false" data-theme="b">
+				<h4>All recorded footprints (全ての保存された足跡)</h4>
+				<div id="allFootprints"></div>
+			</div>
+		</div>
+
+		<div data-role="footer" id="FOOTER">
+			v20210707 since 20190704 <a
+				href="mailto:nakano@cc.kumamoto-u.ac.jp?subject=cae20210707">nakano@cc.kumamoto-u.ac.jp</a><br />
+		</div>
+	</div>
+</body>
+</html>
