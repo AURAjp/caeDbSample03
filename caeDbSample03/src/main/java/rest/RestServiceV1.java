@@ -50,14 +50,17 @@ public class RestServiceV1 {
 	@Produces({"application/x-javascript", "application/json"})
 	@JSONP(queryParam = "callback")
     @GET
-    public String writeData(@QueryParam("callback") String callback, @QueryParam("company") String company,
-    		@QueryParam("text") String text, @Context HttpServletRequest request) {
+    public String writeData(
+            @QueryParam("callback") String callback,
+            @QueryParam("company") String company,
+    		@QueryParam("name") String name,
+    		@QueryParam("price") String price,
+    		@Context HttpServletRequest request) {
+
 		LinkedHashMap<String,Object> var = new LinkedHashMap<>();
-		System.out.println("company:" + company);
-		System.out.println(text);
-		var.put("name", escapeHtml(convertToOiginal(company)));
-		var.put("text", escapeHtml(convertToOiginal(text)));
-		var.put("ip", request.getRemoteAddr());
+		var.put("company", escapeHtml(convertToOiginal(company)));
+		var.put("name"   , escapeHtml(convertToOiginal(name   )));
+		var.put("price"  , escapeHtml(convertToOiginal(price  )));
 		dao.addLine(var);
 		return Json.createObjectBuilder(var).build().toString();
  	}
