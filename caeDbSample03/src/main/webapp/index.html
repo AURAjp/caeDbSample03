@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>商品管理ページ</title>
     <link rel="stylesheet" href="./css/destyle.css" />
+    <link rel="stylesheet" href="./css/stylesheet.css" />
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./js/api.js"></script>
   </head>
   <body>
-  <div class="ui-body ui-body-a">
+  <h1><span class="yellow">商品テーブル</span></h1>
+  <div data-role="collapsible" data-collapsed="false" data-theme="b">
+    <div id="allProducts"></div>
+  </div>
+    <div class="ui-body ui-body-a">
     <form id="myForm">
       <label for="company">会社名:</label>
       <input name="company" id="company" type="text" required>
@@ -19,9 +24,6 @@
       <input name="price" id="price" type="number" required>
       <input value="Submit" data-theme="a" type="submit">
     </form>
-  </div>
-  <div data-role="collapsible" data-collapsed="false" data-theme="b">
-    <div id="allProducts"></div>
   </div>
   </body>
 </html>

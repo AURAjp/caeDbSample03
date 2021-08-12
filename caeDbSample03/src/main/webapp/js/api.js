@@ -24,7 +24,7 @@ function showAllProducts() {
   }
   $.getJSON(uri, function(data) {
     $('#allProducts').children().remove();
-  let html = "<table><thead><tr><th>ID</th><th>会社名</th><th>商品名</th><th>価格</th><th>最終更新日</th></tr></thead>";
+  let html = "<table class=\"container\"><thead><tr><th>ID</th><th>会社名</th><th>商品名</th><th>価格</th><th>最終更新日</th></tr></thead>";
     for (const key in data) {
       html += '<tbody><tr><td>' + data[key]['id'] + '</td><td>'
   + data[key]['company'] + '</td><td>' + data[key]['name'] + '</td><td>'
@@ -49,7 +49,7 @@ function submitDataGet(addInfo) {
   parm["company"] = escape($('#myForm [name=company]').val());
   parm["name"]    = escape($('#myForm [name=name]').val());
   parm["price"]   = escape($('#myForm [name=price]').val());
-  if (addInfo != null) { parm["name"] = parm["name"] + "(" + addInfo + ")"; }
+  if (addInfo != null) { parm["name"]  = parm["name"]  + "(" + addInfo + ")"; }
   if (addInfo != null) { parm["price"] = parm["price"] + "(" + addInfo + ")"; }
   $.getJSON(uri, parm, data => {
     console.log("submitDataGet:" + JSON.stringify(data));
