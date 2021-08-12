@@ -30,12 +30,11 @@ function showAllFootprints() {
   }
   $.getJSON(uri, function(data) {
     $('#allFootprints').children().remove();
-
   let html = "<table><thead><tr><th>ID</th><th>会社名</th><th>商品名</th><th>価格</th><th>最終更新日</th></tr></thead>";
     for (const key in data) {
       html += '<tbody><tr><td>' + data[key]['id'] + '</td><td>'
-  + [key]['company'] + '</td><td>' + data[key]['name'] + '</td><td>'
-  + [key]['price'] + '</td><td>' + (new Date(data[key]['last']).toLocaleString()) + '</td></tr></tbody>';
+  + data[key]['company'] + '</td><td>' + data[key]['name'] + '</td><td>'
+  + data[key]['price'] + '</td><td>' + (new Date(data[key]['last']).toLocaleString()) + '</td></tr></tbody>';
     }
   html += '</table>';
   $('#allFootprints').append(html);
